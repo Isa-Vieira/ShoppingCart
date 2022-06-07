@@ -1,3 +1,5 @@
+const lista = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -37,12 +39,21 @@ const cartItemClickListener = (event) => {
   // coloque seu código aqui
 };
 
-const createCartItemElement = ({ sku, name, salePrice }) => {
+const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
+const funcao = (param1) => {
+  fetchItem(param1).then((param2) => lista.appendChild(createCartItemElement(param2)));
+};
 
+document.addEventListener('click', (param3) => {
+if (param3.target.classList.contains('item__add')) { 
+  const param4 = param3.target.parentNode.firstChild.innerText;
+  funcao(param4);
+}
+});
 window.onload = () => { pegarItem(); };
