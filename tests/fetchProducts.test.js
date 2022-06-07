@@ -1,5 +1,6 @@
-require('../mocks/fetchSimulator');
+/* require('../mocks/fetchSimulator'); */
 const { type } = require('mocha/lib/utils');
+const { fetchItem } = require('../helpers/fetchItem');
 const { fetchProducts } = require('../helpers/fetchProducts');
 const computadorSearch = require('../mocks/search');
 
