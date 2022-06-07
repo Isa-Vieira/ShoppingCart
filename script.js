@@ -35,23 +35,38 @@ resultado.results.forEach((element) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => event.target.remove();
-   
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  saveCartItems(lista.innerHTML);
+};
+
 const createCartItemElement = ({ id: sku, title: name, price: salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  saveCartItems(lista.innerHTML);
   return li;
 };
+
+const loaoding = () => {
+lista.innerHTML = getSavedCartItems();
+lista.addEventListener('click', cartItemClickListener);
+};
 const funcao = (param1) => {
-  fetchItem(param1).then((param2) => lista.appendChild(createCartItemElement(param2)));
+ fetchItem(param1).then((param2) => lista.appendChild(createCartItemElement(param2)));
 };
 
 document.addEventListener('click', (param3) => {
-if (param3.target.classList.contains('item__add')) { 
-  const param4 = param3.target.parentNode.firstChild.innerText;
-  funcao(param4);
-}
+  if (param3.target.classList.contains('item__add')) {
+    const param4 = param3.target.parentNode.firstChild.innerText;
+    funcao(param4);
+} 
 });
-window.onload = () => { pegarItem(); };
+const clearbtn = document.querySelector('.empty-cart');
+clearbtn.addEventListener('click', () => {
+  lista.innerHTML = '';
+  /* saveCartItems(lista.innerHTML); */
+});
+
+window.onload = () => { pegarItem(); loaoding(); };
